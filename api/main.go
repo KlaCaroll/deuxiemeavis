@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	"github.com/jmoiron/sqlx"
-	//"github.com/rs/cors"
+	"github.com/rs/cors"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -38,30 +38,20 @@ func main() {
 	log.Println("opened connection")
 	defer db.Close()
 
-	var mux = http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		var doctors []struct{
-			ID int64 `db:"id" json:"id"`
-			Name string `db:"last_name" json:"last_name"`
-			FirstName string `db:"first_name" json:"first_name"`
-		}
+	s := Service {
+		DB: db,
+	}
 
-		err = db.Select(&doctors, `
-			SELECT id, last_name, first_name FROM deuxiemeavis.doctors;
-		`)
-		if err != nil {
-			log.Println("querying database", err)
-			writeError(w, "database_error", err)
-			return
-		}
-	
-		write(w, doctors)
-	})
+	var mux = http.NewServeMux()
+
+	mux.HandleFunc("/v2/doctors", s.v2Doctors)
 
 	// Start the HTTP server.
+	handler := cors.Default().Handler(mux)
+	// CORS => handler
 	var srv = &http.Server{
 		Addr:    addr,
-		Handler: mux,
+		Handler: handler,
 	}
 	log.Println("listen on addr", addr)
 	err = srv.ListenAndServe()
