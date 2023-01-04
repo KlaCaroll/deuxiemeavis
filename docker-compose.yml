@@ -1,0 +1,15 @@
+version: "3"
+services:
+  mariadb:
+    image: "mariadb"
+    container_name: "mariadb"
+    command: --init-file /data/application/schema.sql
+    volumes:
+      - ./schema.sql:/data/application/schema.sql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "EYZf3IWFCTpps"
+      MYSQL_DATABASE: "deuxiemeavis"
+      MYSQL_USER: "deuxiemeavis"
+      MYSQL_PASSWORD: "L3HmVZ72vMlk"
