@@ -28,7 +28,9 @@ func (s Service) RequestListStatus(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = s.DB.Select(&request, `
-		SELECT r.patient_id, CONCAT(p.first_name,' ', p.last_name) AS patient, CONCAT(d.first_name, ' ', d.last_name) AS doctor, dis.name AS disease, CONCAT(h.name, ' (', h.city, ')') AS hospital
+		SELECT r.patient_id, CONCAT(p.first_name,' ', p.last_name) AS patient, 
+			CONCAT(d.first_name, ' ', d.last_name) AS doctor, dis.name AS disease, 
+			CONCAT(h.name, ' (', h.city, ')') AS hospital
 		FROM requests r
 		JOIN patients p ON p.id = r.patient_id
 		JOIN doctors d ON d.id = r.doctor_id
