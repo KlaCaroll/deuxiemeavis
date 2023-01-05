@@ -12,12 +12,12 @@ func (s Service) v2Doctors(w http.ResponseWriter, r *http.Request) {
 		ID int64 `db:"id" json:"id"`
 		LastName string `db:"last_name" json:"last_name"`
 		FirstName string `db:"first_name" json:"first_name"`
-		Diseases string 
-		Hospital string 
+		Diseases string `json:"diseases"`
+		Hospital string `json:"hospital"`
 	}
 
 	err := s.DB.Select(&items, `
-		SELECT d.id, d.last_name, d.first_name, concat(h.name, ' (', h.city, ')') AS hospital, COALESCE(dis.name, '') AS diseases
+		SELECT d.id, d.last_name, d.first_name, CONCAT(h.name, ' (', h.city, ')') AS hospital, COALESCE(dis.name, '') AS diseases
 		FROM doctors d
 		JOIN hospitals h ON h.id = d.hospital_id
 		LEFT JOIN doctors_diseases ddis ON ddis.doctor_id = d.id
@@ -33,4 +33,3 @@ func (s Service) v2Doctors(w http.ResponseWriter, r *http.Request) {
 
 	write(w, items)
 }
-
