@@ -10,7 +10,7 @@ import (
 func (s Service) v2Doctors(w http.ResponseWriter, r *http.Request) {
 	var items []struct{
 		ID int64 `db:"id" json:"id"`
-		Name string `db:"last_name" json:"last_name"`
+		LastName string `db:"last_name" json:"last_name"`
 		FirstName string `db:"first_name" json:"first_name"`
 		Diseases string 
 		Hospital string 
