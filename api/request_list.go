@@ -9,7 +9,7 @@ import (
 
 func (s Service) RequestListStatus(w http.ResponseWriter, r *http.Request) {
 	var input struct {
-		Status string `db:"''" json:"''"`
+		Status string 
 	}
 
 	err := read(r, &input)
