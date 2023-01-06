@@ -27,7 +27,7 @@ func (ss *StringSlice) Scan(src any) error {
 	return nil
 }
 
-func (s Service) v2Doctors(w http.ResponseWriter, r *http.Request) {
+func (s Service) Doctors(w http.ResponseWriter, r *http.Request) {
 	var items []struct{
 		ID int64 `db:"id" json:"id"`
 		LastName string `db:"last_name" json:"last_name"`

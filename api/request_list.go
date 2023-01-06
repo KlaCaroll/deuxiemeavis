@@ -7,7 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func (s Service) RequestListStatus(w http.ResponseWriter, r *http.Request) {
+func (s Service) RequestsListStatus(w http.ResponseWriter, r *http.Request) {
 	var input struct {
 		Status string 
 	}

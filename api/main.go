@@ -44,8 +44,8 @@ func main() {
 
 	var mux = http.NewServeMux()
 
-	mux.HandleFunc("/v2/doctors", s.v2Doctors)
-	mux.HandleFunc("/v2/requestslist", s.RequestListStatus)
+	mux.HandleFunc("/v2/doctors", s.Doctors)
+	mux.HandleFunc("/v2/requestslist", s.RequestsListStatus)
 	mux.HandleFunc("/v2/newrequest", s.NewRequest)
 	mux.HandleFunc("/v2/secondopinion", s.SecondOpinion)
 
