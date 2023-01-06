@@ -17,7 +17,9 @@ func (s Service) v2Doctors(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err := s.DB.Select(&items, `
-		SELECT d.id, d.last_name, d.first_name, CONCAT(h.name, ' (', h.city, ')') AS hospital, COALESCE(dis.name, '') AS diseases
+		SELECT d.id, d.last_name, d.first_name, 
+			CONCAT(h.name, ' (', h.city, ')') AS hospital, 
+			GROUP_CONCAT(COALESCE(dis.name, '')) AS diseases
 		FROM doctors d
 		JOIN hospitals h ON h.id = d.hospital_id
 		LEFT JOIN doctors_diseases ddis ON ddis.doctor_id = d.id
