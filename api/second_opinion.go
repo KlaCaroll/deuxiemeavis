@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"encoding/json"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -26,10 +27,6 @@ func (s Service) SecondOpinion(w http.ResponseWriter, r *http.Request) {
 	WHERE id = ?;	
 	`, input.SecondOpinion, input.ID,)
 
-	var output struct {
-		Status string `db:"status" json:"result"`
-	}
-	
 	if err != nil {
 		log.Println("querying database", err)
 		writeError(w, "database_error", err)
@@ -37,6 +34,7 @@ func (s Service) SecondOpinion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Println(res)
-	write(w, output)
+	
+	write(w, json.RawMessage([]byte(`{"result": "ok"}`)))
 }
 

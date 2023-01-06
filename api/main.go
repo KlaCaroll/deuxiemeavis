@@ -47,6 +47,7 @@ func main() {
 	mux.HandleFunc("/v2/doctors", s.v2Doctors)
 	mux.HandleFunc("/v2/requestslist", s.RequestListStatus)
 	mux.HandleFunc("/v2/newrequest", s.NewRequest)
+	mux.HandleFunc("/v2/secondopinion", s.SecondOpinion)
 
 	// Start the HTTP server.
 	handler := cors.Default().Handler(mux)
